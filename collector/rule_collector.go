@@ -4,15 +4,15 @@ import (
 	"strings"
 	"time"
 
-	"github.com/pr8kerl/f5er/f5"
 	"github.com/prometheus/client_golang/prometheus"
+	"github.com/satchinjoshi/f5er/f5"
 )
 
 // A RuleCollector implements the prometheus.Collector.
 type RuleCollector struct {
-	metrics                   map[string]ruleMetric
-	bigip                     *f5.Device
-	partitionsList           []string
+	metrics                 map[string]ruleMetric
+	bigip                   *f5.Device
+	partitionsList          []string
 	collectorScrapeStatus   *prometheus.GaugeVec
 	collectorScrapeDuration *prometheus.SummaryVec
 }
@@ -132,7 +132,7 @@ func NewRuleCollector(bigip *f5.Device, namespace string, partitionsList []strin
 			},
 			[]string{"collector"},
 		),
-		bigip:           bigip,
+		bigip:          bigip,
 		partitionsList: partitionsList,
 	}, nil
 }

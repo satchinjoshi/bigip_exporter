@@ -5,13 +5,13 @@ import (
 	"time"
 
 	"github.com/juju/loggo"
-	"github.com/pr8kerl/f5er/f5"
 	"github.com/prometheus/client_golang/prometheus"
+	"github.com/satchinjoshi/f5er/f5"
 )
 
 // A BigipCollector implements the prometheus.Collector.
 type BigipCollector struct {
-	collectors            map[string]prometheus.Collector
+	collectors          map[string]prometheus.Collector
 	totalScrapeDuration prometheus.Summary
 }
 

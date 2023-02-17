@@ -4,15 +4,15 @@ import (
 	"strings"
 	"time"
 
-	"github.com/pr8kerl/f5er/f5"
 	"github.com/prometheus/client_golang/prometheus"
+	"github.com/satchinjoshi/f5er/f5"
 )
 
 // A PoolCollector implements the prometheus.Collector.
 type PoolCollector struct {
-	metrics                   map[string]poolMetric
-	bigip                     *f5.Device
-	partitionsList           []string
+	metrics                 map[string]poolMetric
+	bigip                   *f5.Device
+	partitionsList          []string
 	collectorScrapeStatus   *prometheus.GaugeVec
 	collectorScrapeDuration *prometheus.SummaryVec
 }
@@ -64,6 +64,18 @@ func NewPoolCollector(bigip *f5.Device, namespace string, partitionsList []strin
 				),
 				extract: func(entries f5.LBPoolStatsInnerEntries) float64 {
 					return float64(entries.MinActiveMembers.Value)
+				},
+				valueType: prometheus.GaugeValue,
+			},
+			"memberCnt": {
+				desc: prometheus.NewDesc(
+					prometheus.BuildFQName(namespace, subsystem, "member_total_cnt"),
+					"memberCnt",
+					labelNames,
+					nil,
+				),
+				extract: func(entries f5.LBPoolStatsInnerEntries) float64 {
+					return float64(entries.MemberCnt.Value)
 				},
 				valueType: prometheus.GaugeValue,
 			},
@@ -339,7 +351,7 @@ func NewPoolCollector(bigip *f5.Device, namespace string, partitionsList []strin
 			},
 			[]string{"collector"},
 		),
-		bigip:           bigip,
+		bigip:          bigip,
 		partitionsList: partitionsList,
 	}, nil
 }

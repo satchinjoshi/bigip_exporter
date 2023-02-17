@@ -4,15 +4,15 @@ import (
 	"strings"
 	"time"
 
-	"github.com/pr8kerl/f5er/f5"
 	"github.com/prometheus/client_golang/prometheus"
+	"github.com/satchinjoshi/f5er/f5"
 )
 
 // A VSCollector implements the prometheus.Collector.
 type VSCollector struct {
-	metrics                   map[string]vsMetric
-	bigip                     *f5.Device
-	partitionsList           []string
+	metrics                 map[string]vsMetric
+	bigip                   *f5.Device
+	partitionsList          []string
 	collectorScrapeStatus   *prometheus.GaugeVec
 	collectorScrapeDuration *prometheus.SummaryVec
 }
@@ -471,7 +471,7 @@ func NewVSCollector(bigip *f5.Device, namespace string, partitionsList []string)
 			},
 			[]string{"collector"},
 		),
-		bigip:           bigip,
+		bigip:          bigip,
 		partitionsList: partitionsList,
 	}, nil
 }

@@ -5,11 +5,11 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/ExpressenAB/bigip_exporter/collector"
-	"github.com/ExpressenAB/bigip_exporter/config"
 	"github.com/juju/loggo"
-	"github.com/pr8kerl/f5er/f5"
 	"github.com/prometheus/client_golang/prometheus"
+	"github.com/satchinjoshi/bigip_exporter/collector"
+	"github.com/satchinjoshi/bigip_exporter/config"
+	"github.com/satchinjoshi/f5er/f5"
 )
 
 var (
