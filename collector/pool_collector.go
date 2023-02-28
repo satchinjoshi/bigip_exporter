@@ -4,8 +4,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/pr8kerl/f5er/f5"
 	"github.com/prometheus/client_golang/prometheus"
-	"github.com/satchinjoshi/f5er/f5"
 )
 
 // A PoolCollector implements the prometheus.Collector.
