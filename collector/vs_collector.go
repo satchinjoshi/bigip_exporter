@@ -1,6 +1,7 @@
 package collector
 
 import (
+	"log"
 	"strings"
 	"time"
 
@@ -483,6 +484,9 @@ func (c *VSCollector) Collect(ch chan<- prometheus.Metric) {
 	if err != nil {
 		c.collectorScrapeStatus.WithLabelValues("vs").Set(float64(0))
 		logger.Warningf("Failed to get statistics for virtual servers")
+		if err.Error() == "error: 401 Unauthorised - check your username and passwd" {
+			log.Fatal(err)
+		}
 	} else {
 		for key, virtualStats := range allVirtualServerStats.Entries {
 			keyParts := strings.Split(key, "/")

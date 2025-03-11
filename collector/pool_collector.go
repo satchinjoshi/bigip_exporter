@@ -1,6 +1,7 @@
 package collector
 
 import (
+	"log"
 	"strings"
 	"time"
 
@@ -363,6 +364,9 @@ func (c *PoolCollector) Collect(ch chan<- prometheus.Metric) {
 	if err != nil {
 		c.collectorScrapeStatus.WithLabelValues("pool").Set(float64(0))
 		logger.Warningf("Failed to get statistics for pools")
+		if err.Error() == "error: 401 Unauthorised - check your username and passwd" {
+			log.Fatal(err)
+		}
 	} else {
 		for key, poolStats := range allPoolStats.Entries {
 			keyParts := strings.Split(key, "/")

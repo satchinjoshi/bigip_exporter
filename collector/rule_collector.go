@@ -1,6 +1,7 @@
 package collector
 
 import (
+	"log"
 	"strings"
 	"time"
 
@@ -144,6 +145,9 @@ func (c *RuleCollector) Collect(ch chan<- prometheus.Metric) {
 	if err != nil {
 		c.collectorScrapeStatus.WithLabelValues("rule").Set(float64(0))
 		logger.Warningf("Failed to get statistics for rules")
+		if err.Error() == "error: 401 Unauthorised - check your username and passwd" {
+			log.Fatal(err)
+		}
 	} else {
 		for key, ruleStats := range allRuleStats.Entries {
 			keyParts := strings.Split(key, "/")

@@ -1,6 +1,7 @@
 package collector
 
 import (
+	"log"
 	"strings"
 	"time"
 
@@ -183,6 +184,9 @@ func (c *NodeCollector) Collect(ch chan<- prometheus.Metric) {
 	if err != nil {
 		c.collectorScrapeStatus.WithLabelValues("node").Set(float64(0))
 		logger.Warningf("Failed to get statistics for nodes (%s)", err)
+		if err.Error() == "error: 401 Unauthorised - check your username and passwd" {
+			log.Fatal(err)
+		}
 	} else {
 		for key, nodeStats := range allNodeStats.Entries {
 			keyParts := strings.Split(key, "/")
